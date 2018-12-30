@@ -1,0 +1,26 @@
+{
+  "name": "kata-xo",
+  "version": "1.0.0",
+  "description": "Tic Tac Toe game on the command line",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "game",
+    "command",
+    "line",
+    "tic",
+    "tac",
+    "toe",
+    "noughts",
+    "and",
+    "crosses"
+  ],
+  "author": "Annabel Church",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {
+    "jest": "^23.6.0"
+  }
+}
