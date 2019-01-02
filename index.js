@@ -1,12 +1,21 @@
 
 const game = () => {
-    let board = [];
-    let player1 = [];
-    let player2 = [];
+
+    const newBoard = () => {
+        let row = [null, null, null];
+        let board = [row, row, row];
+        return board;
+    };
+    
+    // players
+    let player1 = 'X';
+    let player2 = 'O';
 
     
 
-
+    return {
+        newBoard: newBoard
+    }
 };
 
 module.exports = game;

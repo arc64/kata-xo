@@ -1,5 +1,12 @@
-const sum = require('./index');
+const game = require('./index');
 
-test('game board exists', () => {
-  expect(1).toBe(2);
+test('when game starts, board is empty', () => {
+  const emptyGame = [ [ null, null, null ],
+                      [ null, null, null ],
+                      [ null, null, null ] ];
+  expect(game().newBoard()).toEqual(emptyGame);
 });
+
+test('when player', () => {
+    // expect(1).toBe(2);
+  });
