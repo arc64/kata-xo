@@ -13,6 +13,8 @@ test('when game starts, board is empty', () => {
 });
 
 // TODO: Can you build up and tear down in jest better than this?
+// TODO: Make sure tests run without console comments
+// TODO: Fix issue with tests not completing 
 
 test('when player plays a token in a slot that is not taken, the board is updated', () => {   
   let board = game.newBoard();
@@ -57,30 +59,9 @@ test('when player plays a token in a slot that creates a win condition, the game
                 [ player2, player2, player2 ],
                 [ player1, ' ', ' ' ] ];
 
+  expect(game.hasWinCondition(emptyGame)).toEqual(false);
   expect(game.hasWinCondition(board)).toEqual(false);
   expect(game.takeTurn(player2, board, row, column)).toEqual(turnTaken);
   expect(game.hasWinCondition(board)).toEqual(true);
   
 });
-
-test('when player plays a token in a slot that creates no win condition, the game switches player', () => {
-
-  
-});
-
-
-// test('when the game switches player, player is switched', () => {
-//   expect(1).toBe(2);
-// });
-
-// test('when player plays a token in a slot that is taken, the user is notified', () => {
-//   expect(1).toBe(2);
-// });
-
-// test('when player plays a token in a slot that creates a win condition, the player is notified', () => {
-//   expect(1).toBe(2);
-// });
-
-// test('when the game switches player, the player is notified', () => {
-//   expect(1).toBe(2);
-// });

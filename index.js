@@ -1,7 +1,7 @@
 const readline = require('readline');
 const game = require('./game');
 
-const interface = (game) => {
+const gameInterface = (game) => {
     let board = game.newBoard();
 
     const showSplash = () => {
@@ -34,7 +34,7 @@ const interface = (game) => {
         console.log('||                |        |                   ||');
         console.log('||         ------------------------            ||'); 
         console.log('||                |        |                   ||');
-        console.log('||            %s   |    %s   |    %s              ||', row2[0], 'f', row2[2]);
+        console.log('||            %s   |    %s   |    %s              ||', row2[0], row2[1], row2[2]);
         console.log('||                |        |                   ||');
         console.log('||         ------------------------            ||');
         console.log('||                |        |                   ||');
@@ -70,23 +70,40 @@ const interface = (game) => {
             return {};
     };
 
-    const promptPlayer = (rl) => {
+    const playGame = (rl) => {
+        showDirections();
+        showBoard();
+        showCurrentPlayer();
+
         rl.question('Where would you like to place your token? (type key, then press enter) \n', (answer) => {
+            console.log('=================================================');
             let coords = mapKeysToCoords(answer);
+            // Did use use a key we understand?
             if (Object.keys(coords).length) {
-                game.takeTurn(game.getCurrentPlayer, board, coords.row, coords.column)
-                showBoard();
-                game.switchPlayer();
-            // display rules, keyboard interface and empty board
+                game.takeTurn(game.getCurrentPlayer(), board, coords.row, coords.column)
+                // check if they won
+                if (game.hasWinCondition(board)) {
+                    showBoard();
+                    console.log('     Player %s - YOU WON! \n', game.getCurrentPlayer());
+                    // TODO: fireworks
+                    rl.close();
+                } else {
+                    // todo: is game board full
+                    // Give the next player a turn
+                    game.switchPlayer();
+                    showBoard();
+                    showCurrentPlayer();
+                    playGame(rl);
+                }
             } else {
-                console.log('\n === Oh no! I don\'t understand, please try again. === \n');
+                console.log('\n== Oh no! I don\'t understand, please try again. == \n');
                 showDirections();
                 showBoard();
                 showCurrentPlayer();
-                promptPlayer(rl);
+                // Ask player again
+                playGame(rl);
             }
 
-            // rl.close();
         });
     }
 
@@ -94,23 +111,17 @@ const interface = (game) => {
         input: process.stdin,
         output: process.stdout
     }); 
-                
-    // TODO: make it pretty with cowsay?  
-    showSplash();
-    showDirections();
-    showBoard();
-    showCurrentPlayer();
-
-    // TODO: move board to constructor?
-    promptPlayer(rl);
-
-    
-        // check win 
-            // message user if won
-        // switch player
-            // message user if player switched
-    
+       
+    const beginGame = () => {
+        // TODO: make it pretty with cowsay?  
+        showSplash();
+        
+        // TODO: move board to constructor?
+        playGame(rl);
+    };
+   
+    beginGame();
 }
 
-interface(game());
+gameInterface(game());
 

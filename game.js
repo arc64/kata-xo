@@ -2,10 +2,11 @@
 const game = () => {
     const playerX = 'X';
     const playerO = 'O';
+    const empty = ' ';
     let currentPlayer = playerX;
-
+    
     const newBoard = () => {
-        let row = [' ', ' ', ' '];
+        let row = [empty, empty, empty];
         let board = [row.slice(), 
                      row.slice(), 
                      row.slice()];
@@ -24,7 +25,7 @@ const game = () => {
     }
 
     const takeTurn = (token, board, row, column) => {
-        if (board[row][column] == ' ') {
+        if (board[row][column] == empty) {
             board[row][column] = token;
         } else {
             // how should you do error messages?
@@ -34,7 +35,7 @@ const game = () => {
     };
 
     const matches = (tokens) => {
-        if (tokens[0] == tokens[1] && tokens[0] == tokens[2]){
+        if (tokens[0] != empty && (tokens[0] == tokens[1] && tokens[0] == tokens[2])){
             return true;
         }
         return false;
@@ -45,7 +46,7 @@ const game = () => {
         // winner is assumed to be last turn haver
 
         // TODO: could just check the rows/columns/diagonals 
-        // that last token was placed
+        // that last token was placed, instead of all
         
         const row1 = board[0];
         const row2 = board[1];
@@ -69,12 +70,6 @@ const game = () => {
         
         return false
     };
-
-
-    // ask player for token
-    // takeTurn and then check for win 
-    // if not win change player
-
 
     return {
         newBoard: newBoard,
