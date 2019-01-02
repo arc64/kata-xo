@@ -12,7 +12,7 @@ const game = () => {
                      row.slice()];
         return board;
     };
-    
+
     const switchPlayer = () => {
         if (currentPlayer == playerX)
             currentPlayer = playerO;
@@ -27,11 +27,9 @@ const game = () => {
     const takeTurn = (token, board, row, column) => {
         if (board[row][column] == empty) {
             board[row][column] = token;
-        } else {
-            // how should you do error messages?
-            console.error('This position is taken, please pick a empty space!')
+            return true;
         }
-        return board;
+        return false;
     };
 
     const matches = (tokens) => {
@@ -41,13 +39,24 @@ const game = () => {
         return false;
     };
 
+    const rowIsFull = (row) => {
+        if (row[0] != empty || row[1] != empty || row[2] != empty) {
+            return true;
+        }
+        return false;
+    };
+
+    const boardIsFull = (board) => {
+        if(rowIsFull(board[0]) && rowIsFull(board[1]) && rowIsFull(board[2])) {
+            return true;
+        };
+        return false;
+    };
+    
     const hasWinCondition = (board) => {
         // assume that win is check on each turn, 
         // winner is assumed to be last turn haver
 
-        // TODO: could just check the rows/columns/diagonals 
-        // that last token was placed, instead of all
-        
         const row1 = board[0];
         const row2 = board[1];
         const row3 = board[2];
@@ -76,7 +85,8 @@ const game = () => {
         takeTurn: takeTurn, 
         hasWinCondition: hasWinCondition,
         switchPlayer: switchPlayer,
-        getCurrentPlayer: getCurrentPlayer
+        getCurrentPlayer: getCurrentPlayer,
+        boardIsFull: boardIsFull
     }
 };
 

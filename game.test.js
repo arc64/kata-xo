@@ -1,4 +1,3 @@
-const env = require('./index');
 const game = require('./game')();
 
 const emptyGame = [ [ ' ', ' ', ' ' ],
@@ -13,8 +12,6 @@ test('when game starts, board is empty', () => {
 });
 
 // TODO: Can you build up and tear down in jest better than this?
-// TODO: Make sure tests run without console comments
-// TODO: Fix issue with tests not completing 
 
 test('when player plays a token in a slot that is not taken, the board is updated', () => {   
   let board = game.newBoard();

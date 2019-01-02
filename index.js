@@ -76,26 +76,39 @@ const gameInterface = (game) => {
         showDirections();
         showBoard();
         showCurrentPlayer();
+        askQuestion(rl);
+    }
 
+    const askQuestion = (rl) => {
         rl.question('\nWhere would you like to place your token? (type key, then press enter) \n', (answer) => {
             console.log('=================================================');
             let coords = mapKeysToCoords(answer);
             // Did use use a key we understand?
             if (Object.keys(coords).length) {
-                game.takeTurn(game.getCurrentPlayer(), board, coords.row, coords.column)
-                // check if they won
-                if (game.hasWinCondition(board)) {
-                    showBoard();
-                    speakToUser('\n     Player ' + game.getCurrentPlayer() + ' - YOU WON! \n');
-                    // TODO: fireworks
-                    rl.close();
+                if(game.takeTurn(game.getCurrentPlayer(), board, coords.row, coords.column)) {
+                    // check if they won
+                    if (game.hasWinCondition(board)) {
+                        showBoard();
+                        speakToUser('\n     Player ' + game.getCurrentPlayer() + ' - YOU WON! \n');
+                        rl.close();
+                    } else {
+                        // If board is full
+                        if (game.boardIsFull(board)) {
+                            showBoard();
+                            speakToUser('\n     The game is a DRAW! \n');
+                            rl.close();
+                        }
+                        // Give the next player a turn
+                        game.switchPlayer();
+                        console.clear();
+                        console.log('=================================================');
+                        showBoard();
+                        showCurrentPlayer();
+                        askQuestion(rl);
+                    }
                 } else {
-                    // todo: is game board full
-                    // Give the next player a turn
-                    game.switchPlayer();
-                    showBoard();
-                    showCurrentPlayer();
-                    playGame(rl);
+                    speakToUser('\n     This position is taken, please pick a empty space!');
+                    askQuestion(rl);
                 }
             } else {
                 console.log('\n== Oh no! I don\'t understand, please try again. == \n');
@@ -103,9 +116,9 @@ const gameInterface = (game) => {
                 showBoard();
                 showCurrentPlayer();
                 // Ask player again
-                playGame(rl);
+                askQuestion(rl);
             }
-
+            
         });
     }
 
@@ -115,10 +128,9 @@ const gameInterface = (game) => {
     }); 
        
     const beginGame = () => {
-        // TODO: make it pretty with cowsay?  
         showSplash();
         
-        // TODO: move board to constructor?
+        // TODO: move board into the game where it should be, and stop passing it
         playGame(rl);
     };
    
