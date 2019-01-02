@@ -1,14 +1,28 @@
 
 const game = () => {
+    const playerX = 'X';
+    const playerO = 'O';
+    let currentPlayer = playerX;
 
     const newBoard = () => {
         let row = [' ', ' ', ' '];
         let board = [row.slice(), 
-                    row.slice(), 
-                    row.slice()];
+                     row.slice(), 
+                     row.slice()];
         return board;
     };
     
+    const switchPlayer = () => {
+        if (currentPlayer == playerX)
+            currentPlayer = playerO;
+        else
+            currentPlayer = playerX;
+    };
+
+    const getCurrentPlayer = () => {
+        return currentPlayer;
+    }
+
     const takeTurn = (token, board, row, column) => {
         if (board[row][column] == ' ') {
             board[row][column] = token;
@@ -65,7 +79,9 @@ const game = () => {
     return {
         newBoard: newBoard,
         takeTurn: takeTurn, 
-        hasWinCondition: hasWinCondition
+        hasWinCondition: hasWinCondition,
+        switchPlayer: switchPlayer,
+        getCurrentPlayer: getCurrentPlayer
     }
 };
 

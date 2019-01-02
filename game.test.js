@@ -69,7 +69,9 @@ test('when player plays a token in a slot that creates no win condition, the gam
 });
 
 
-
+// test('when the game switches player, player is switched', () => {
+//   expect(1).toBe(2);
+// });
 
 // test('when player plays a token in a slot that is taken, the user is notified', () => {
 //   expect(1).toBe(2);
