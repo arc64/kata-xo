@@ -14,6 +14,8 @@ yarn install
 
 yarn test
 
+## Play game
 
+node index.js
 
 NB. Code written for clarity not speed. Intentionally used only native node.js & es6.
