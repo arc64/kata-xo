@@ -25,7 +25,7 @@ const gameInterface = (game) => {
     };
     const showSplash = () => {
         console.clear();
-        speakToUser('\n   Let\'s play Tic Tac Toe!    \n');
+        console.log('\n     Let\'s play Tic Tac Toe!    ');
         console.log('================================================= \n');
     };
 
@@ -39,14 +39,14 @@ const gameInterface = (game) => {
         console.log('||                A | S | D                    ||');             
         console.log('||               ___|___|___                   ||');                  
         console.log('||                Z | X | C                    ||');                      
-        console.log('||                  |   |                      ||'); 
-        console.log('================================================='); 
+        console.log('||                  |   |                      ||');  
     };
 
     const showBoard = () => {
         let row1 = board[0];
         let row2 = board[1];
         let row3 = board[2];
+        console.log('=================================================');
         console.log('||                |        |                   ||');
         console.log('||            %s   |    %s   |    %s              ||', row1[0], row1[1], row1[2]);
         console.log('||                |        |                   ||');
@@ -81,40 +81,44 @@ const gameInterface = (game) => {
 
     const askQuestion = (rl) => {
         rl.question('\nWhere would you like to place your token? (type key, then press enter) \n', (answer) => {
-            console.log('=================================================');
             let coords = mapKeysToCoords(answer);
             // Did use use a key we understand?
             if (Object.keys(coords).length) {
                 if(game.takeTurn(game.getCurrentPlayer(), board, coords.row, coords.column)) {
                     // check if they won
                     if (game.hasWinCondition(board)) {
+                        console.clear();
                         showBoard();
-                        speakToUser('\n     Player ' + game.getCurrentPlayer() + ' - YOU WON! \n');
+                        speakToUser('\n Player ' + game.getCurrentPlayer() + ' - YOU WON! \n');
                         rl.close();
                     } else {
                         // If board is full
                         if (game.boardIsFull(board)) {
+                            console.clear();
                             showBoard();
-                            speakToUser('\n     The game is a DRAW! \n');
+                            speakToUser('\n The game is a DRAW! \n');
                             rl.close();
                         }
                         // Give the next player a turn
                         game.switchPlayer();
                         console.clear();
-                        console.log('=================================================');
+                        showDirections();
                         showBoard();
                         showCurrentPlayer();
                         askQuestion(rl);
                     }
                 } else {
-                    speakToUser('\n     This position is taken, please pick a empty space!');
+                    console.clear();
+                    showDirections();
+                    showBoard();
+                    speakToUser('\n==  Player ' + game.getCurrentPlayer() + ' this position is taken, please pick a empty space! == \n');
                     askQuestion(rl);
                 }
             } else {
-                console.log('\n== Oh no! I don\'t understand, please try again. == \n');
+                console.clear();
                 showDirections();
                 showBoard();
-                showCurrentPlayer();
+                speakToUser('\n== Oh no! Player ' + game.getCurrentPlayer() + '! I don\'t understand, please try again. == \n');
                 // Ask player again
                 askQuestion(rl);
             }
