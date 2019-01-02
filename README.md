@@ -13,3 +13,7 @@ yarn install
 ## Run tests
 
 yarn test
+
+
+
+NB. Code written for clarity not speed. 
