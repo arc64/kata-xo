@@ -16,13 +16,19 @@ const gameInterface = (game) => {
                         'c' : { row:  2, column: 2} 
                     };
 
-    const speakToUser = (msg) => {
+    const speakToUser = (message) => {
+        let msg = '\n  Player ' + game.getCurrentPlayer() + ' - it is your turn! \n';
+
+        if(message) {
+            msg = message;
+        }
         console.log(cowsay.say({
             text : msg,
             e : "oO",
             T : "U "
         }));
     };
+
     const showSplash = () => {
         console.clear();
         console.log('\n     Let\'s play Tic Tac Toe!    ');
@@ -61,10 +67,6 @@ const gameInterface = (game) => {
         console.log('================================================= \n');
     };
 
-    const showCurrentPlayer = () => {
-        speakToUser('\n  Player ' + game.getCurrentPlayer() + ' - it is your turn! \n');
-    };
-
     const mapKeysToCoords = (input) => {
         const result = inputKeyMap[input.toLowerCase()];
         if(result) 
@@ -73,9 +75,10 @@ const gameInterface = (game) => {
     };
 
     const playGame = (rl) => {
+        showSplash();
         showDirections();
         showBoard();
-        showCurrentPlayer();
+        speakToUser('');
         askQuestion(rl);
     }
 
@@ -104,7 +107,7 @@ const gameInterface = (game) => {
                         console.clear();
                         showDirections();
                         showBoard();
-                        showCurrentPlayer();
+                        speakToUser('');
                         askQuestion(rl);
                     }
                 } else {
@@ -132,8 +135,6 @@ const gameInterface = (game) => {
     }); 
        
     const beginGame = () => {
-        showSplash();
-        
         // TODO: move board into the game where it should be, and stop passing it
         playGame(rl);
     };
