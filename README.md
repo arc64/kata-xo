@@ -1,21 +1,24 @@
 
 # Tic Tac Toe
 
-First print stuff on the command line
-Rules of the game
+A game on the commandline
 
-Then take input on the command line
+## Prerequisites 
+
+- node
+- yarn
 
 ## Install
 
-yarn install
+```brew install yarn```
+```yarn install```
 
 ## Run tests
 
-yarn test
+```jest```
 
 ## Play game
 
-node index.js
+```node index.js```
 
 NB. Code written for clarity not speed. Intentionally used only native node.js & es6.
