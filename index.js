@@ -1,4 +1,5 @@
 const readline = require('readline');
+const cowsay = require("cowsay");
 const game = require('./game');
 
 const gameInterface = (game) => {
@@ -15,15 +16,21 @@ const gameInterface = (game) => {
                         'c' : { row:  2, column: 2} 
                     };
 
+    const speakToUser = (msg) => {
+        console.log(cowsay.say({
+            text : msg,
+            e : "oO",
+            T : "U "
+        }));
+    };
     const showSplash = () => {
         console.clear();
-        console.log('\n \n     Let\'s play Tic Tac Toe! ');
+        speakToUser('\n   Let\'s play Tic Tac Toe!    \n');
         console.log('================================================= \n');
     };
 
     const showDirections = () => {
         console.log('     Remember to get three in a row to win!');
-        console.log('\n');
         console.log('=================================================');
         console.log('||   Use these keys to place your token:       ||'); 
         console.log('||                  |   |                      ||');        
@@ -55,7 +62,7 @@ const gameInterface = (game) => {
     };
 
     const showCurrentPlayer = () => {
-        console.log('     Player %s - it is your turn! \n', game.getCurrentPlayer());
+        speakToUser('\n  Player ' + game.getCurrentPlayer() + ' - it is your turn! \n');
     };
 
     const mapKeysToCoords = (input) => {
@@ -70,7 +77,7 @@ const gameInterface = (game) => {
         showBoard();
         showCurrentPlayer();
 
-        rl.question('Where would you like to place your token? (type key, then press enter) \n', (answer) => {
+        rl.question('\nWhere would you like to place your token? (type key, then press enter) \n', (answer) => {
             console.log('=================================================');
             let coords = mapKeysToCoords(answer);
             // Did use use a key we understand?
@@ -79,7 +86,7 @@ const gameInterface = (game) => {
                 // check if they won
                 if (game.hasWinCondition(board)) {
                     showBoard();
-                    console.log('     Player %s - YOU WON! \n', game.getCurrentPlayer());
+                    speakToUser('\n     Player ' + game.getCurrentPlayer() + ' - YOU WON! \n');
                     // TODO: fireworks
                     rl.close();
                 } else {

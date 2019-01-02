@@ -21,6 +21,7 @@
   "license": "MIT",
   "devDependencies": {},
   "dependencies": {
+    "cowsay": "^1.4.0",
     "jest": "^23.6.0"
   }
 }
