@@ -3,6 +3,17 @@ const game = require('./game');
 
 const gameInterface = (game) => {
     let board = game.newBoard();
+    const inputKeyMap = { 
+                        'q': { row:  0, column: 0 }, 
+                        'w': { row:  0, column: 1 },
+                        'e' : { row:  0, column: 2 },
+                        'a' : { row:  1, column: 0 },
+                        's' : { row:  1, column: 1 },
+                        'd' : { row:  1, column: 2 },
+                        'z' : { row:  2, column: 0 },
+                        'x' : { row:  2, column: 1 },
+                        'c' : { row:  2, column: 2} 
+                    };
 
     const showSplash = () => {
         console.clear();
@@ -48,26 +59,10 @@ const gameInterface = (game) => {
     };
 
     const mapKeysToCoords = (input) => {
-        if (input == 'q' || input == 'Q')
-            return { row:  0, column: 0 };
-        else if(input == 'w' || input == 'W')
-            return { row:  0, column: 1 };
-        else if(input == 'e' || input == 'E')
-            return { row:  0, column: 2 };
-        else if(input == 'a' || input == 'A')
-            return { row:  1, column: 0 };
-        else if(input == 's' || input == 'S')
-            return { row:  1, column: 1 };
-        else if(input == 'd' || input == 'D')
-            return { row:  1, column: 2 };
-        else if(input == 'z' || input == 'Z')
-            return { row:  2, column: 0 };
-        else if(input == 'x' || input == 'X')
-            return { row:  2, column: 1 };
-        else if(input == 'c' || input == 'C')
-            return { row:  2, column: 2};
-        else 
-            return {};
+        const result = inputKeyMap[input.toLowerCase()];
+        if(result) 
+            return result;
+        return {};
     };
 
     const playGame = (rl) => {
