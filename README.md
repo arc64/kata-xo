@@ -16,4 +16,4 @@ yarn test
 
 
 
-NB. Code written for clarity not speed. 
+NB. Code written for clarity not speed. Intentionally used only native node.js.

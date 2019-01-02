@@ -2,7 +2,7 @@
 const game = () => {
 
     const newBoard = () => {
-        let row = [null, null, null];
+        let row = [' ', ' ', ' '];
         let board = [row.slice(), 
                     row.slice(), 
                     row.slice()];
@@ -10,7 +10,7 @@ const game = () => {
     };
     
     const takeTurn = (token, board, row, column) => {
-        if (board[row][column] == null) {
+        if (board[row][column] == ' ') {
             board[row][column] = token;
         } else {
             // how should you do error messages?
@@ -56,10 +56,6 @@ const game = () => {
         return false
     };
 
-    // players
-    let player1 = 'X';
-    let player2 = 'O';
-    let board = newBoard;
 
     // ask player for token
     // takeTurn and then check for win 

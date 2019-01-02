@@ -1,9 +1,9 @@
 const env = require('./index');
 const game = require('./game')();
 
-const emptyGame = [ [ null, null, null ],
-                    [ null, null, null ],
-                    [ null, null, null ] ];
+const emptyGame = [ [ ' ', ' ', ' ' ],
+                    [ ' ', ' ', ' ' ],
+                    [ ' ', ' ', ' ' ] ];
 
 const player1 = 'X';
 const player2 = 'O';
@@ -19,9 +19,9 @@ test('when player plays a token in a slot that is not taken, the board is update
   let row = 1;
   let column = 2;
 
-  const turnTaken = [ [ null, null, null ],
-                      [ null, null, player1 ],
-                      [ null, null, null ] ];
+  const turnTaken = [ [ ' ', ' ', ' ' ],
+                      [ ' ', ' ', player1 ],
+                      [ ' ', ' ', ' ' ] ];
 
   expect(board).toEqual(emptyGame);
   expect(game.takeTurn(player1, board, row, column)).toEqual(turnTaken);
@@ -32,13 +32,13 @@ test('when player plays a token in a slot that is taken, the board remains uncha
   let row = 1;
   let column = 2;
 
-  const firstTurnTaken = [  [ null, null, null ],
-                            [ null, null, player2 ],
-                            [ null, null, null ] ];
+  const firstTurnTaken = [  [ ' ', ' ', ' ' ],
+                            [ ' ', ' ', player2 ],
+                            [ ' ', ' ', ' ' ] ];
 
-  const secondTurnTaken = [ [ null, null, null ],
-                            [ null, null, player1 ],
-                            [ null, null, null ] ];
+  const secondTurnTaken = [ [ ' ', ' ', ' ' ],
+                            [ ' ', ' ', player1 ],
+                            [ ' ', ' ', ' ' ] ];
 
   expect(board).toEqual(emptyGame);
   expect(game.takeTurn(player2, board, row, column)).toEqual(firstTurnTaken);
@@ -46,15 +46,16 @@ test('when player plays a token in a slot that is taken, the board remains uncha
 });
 
 test('when player plays a token in a slot that creates a win condition, the game is won', () => {
-  let board = [ [ null, null, player1 ],
-                [ null, player2, player2 ],
-                [ player1, null, null ] ];
+  let board = [ [ ' ', ' ', player1 ],
+                [ ' ', player2, player2 ],
+                [ player1, ' ', ' ' ] ];
+
   let row = 1;
   let column = 0;
 
-  let turnTaken = [ [ null, null, player1 ],
+  let turnTaken = [ [ ' ', ' ', player1 ],
                 [ player2, player2, player2 ],
-                [ player1, null, null ] ];
+                [ player1, ' ', ' ' ] ];
 
   expect(game.hasWinCondition(board)).toEqual(false);
   expect(game.takeTurn(player2, board, row, column)).toEqual(turnTaken);
