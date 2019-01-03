@@ -93,9 +93,8 @@ const gameInterface = (game) => {
                         rl.close();
                     } else if (game.boardIsFull(board)) {
                         // If board is full
-                        console.log('full')
-                    //         displayGameState('\n The game is a DRAW! \n');
-                    //         rl.close();
+                        displayGameState('\n The game is a DRAW! \n');
+                        rl.close();
                     } else {
                         // Give the next player a turn
                         game.switchPlayer();
