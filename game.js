@@ -40,7 +40,7 @@ const game = () => {
     };
 
     const rowIsFull = (row) => {
-        if (row[0] != empty || row[1] != empty || row[2] != empty) {
+        if (row[0] != empty && row[1] != empty && row[2] != empty) {
             return true;
         }
         return false;

@@ -17,11 +17,9 @@ const gameInterface = (game) => {
                     };
 
     const speakToUser = (message) => {
-        let msg = '\n  Player ' + game.getCurrentPlayer() + ' - it is your turn! \n';
+        let msg = '\n Oh no, something went wrong \n';
+        if(message) msg = message;
 
-        if(message) {
-            msg = message;
-        }
         console.log(cowsay.say({
             text : msg,
             e : "oO",
@@ -74,69 +72,60 @@ const gameInterface = (game) => {
         return {};
     };
 
-    const playGame = (rl) => {
+    const displayGameState = (msg) => {
+        console.clear();
         showSplash();
         showDirections();
         showBoard();
-        speakToUser('');
-        askQuestion(rl);
-    }
+        speakToUser(msg);
+    };
 
     const askQuestion = (rl) => {
         rl.question('\nWhere would you like to place your token? (type key, then press enter) \n', (answer) => {
             let coords = mapKeysToCoords(answer);
+         
             // Did use use a key we understand?
             if (Object.keys(coords).length) {
                 if(game.takeTurn(game.getCurrentPlayer(), board, coords.row, coords.column)) {
                     // check if they won
                     if (game.hasWinCondition(board)) {
-                        console.clear();
-                        showBoard();
-                        speakToUser('\n Player ' + game.getCurrentPlayer() + ' - YOU WON! \n');
+                        displayGameState('\n Player ' + game.getCurrentPlayer() + ' - YOU WON! \n');
                         rl.close();
-                    } else {
+                    } else if (game.boardIsFull(board)) {
                         // If board is full
-                        if (game.boardIsFull(board)) {
-                            console.clear();
-                            showBoard();
-                            speakToUser('\n The game is a DRAW! \n');
-                            rl.close();
-                        }
+                        console.log('full')
+                    //         displayGameState('\n The game is a DRAW! \n');
+                    //         rl.close();
+                    } else {
                         // Give the next player a turn
                         game.switchPlayer();
-                        console.clear();
-                        showDirections();
-                        showBoard();
-                        speakToUser('');
-                        askQuestion(rl);
+                        displayGameState('\n  Player ' + game.getCurrentPlayer() + ' - it is your turn! \n');
+                        askQuestion(rl); 
                     }
                 } else {
-                    console.clear();
-                    showDirections();
-                    showBoard();
-                    speakToUser('\n==  Player ' + game.getCurrentPlayer() + ' this position is taken, please pick a empty space! == \n');
-                    askQuestion(rl);
+                    // Position taken
+                    displayGameState('\n  Player ' + game.getCurrentPlayer() + ' this position is taken, please pick a empty space!  \n');
+                    askQuestion(rl); 
                 }
             } else {
-                console.clear();
-                showDirections();
-                showBoard();
-                speakToUser('\n== Oh no! Player ' + game.getCurrentPlayer() + '! I don\'t understand, please try again. == \n');
                 // Ask player again
-                askQuestion(rl);
+                displayGameState('\n Oh no! Player ' + game.getCurrentPlayer() + '! I don\'t understand, please try again.  \n');
+                askQuestion(rl); 
             }
             
         });
     }
-
-    const rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    }); 
        
     const beginGame = () => {
         // TODO: move board into the game where it should be, and stop passing it
-        playGame(rl);
+        
+        const rl = readline.createInterface({
+            input: process.stdin,
+            output: process.stdout
+        }); 
+        
+        displayGameState('\n  Player ' + game.getCurrentPlayer() + ' - it is your turn! \n');
+        askQuestion(rl);   
     };
    
     beginGame();

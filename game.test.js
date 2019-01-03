@@ -23,7 +23,8 @@ test('when player plays a token in a slot that is not taken, the board is update
                       [ ' ', ' ', ' ' ] ];
 
   expect(board).toEqual(emptyGame);
-  expect(game.takeTurn(player1, board, row, column)).toEqual(turnTaken);
+  expect(game.takeTurn(player1, board, row, column)).toEqual(true);
+  expect(board).toEqual(turnTaken);
 });
 
 test('when player plays a token in a slot that is taken, the board remains unchanged', () => {
@@ -40,8 +41,10 @@ test('when player plays a token in a slot that is taken, the board remains uncha
                             [ ' ', ' ', ' ' ] ];
 
   expect(board).toEqual(emptyGame);
-  expect(game.takeTurn(player2, board, row, column)).toEqual(firstTurnTaken);
-  expect(game.takeTurn(player1, board, row, column)).not.toEqual(secondTurnTaken);
+  expect(game.takeTurn(player2, board, row, column)).toEqual(true);
+  expect(board).toEqual(firstTurnTaken);
+  expect(game.takeTurn(player1, board, row, column)).toEqual(false);
+  expect(board).not.toEqual(secondTurnTaken);
 });
 
 test('when player plays a token in a slot that creates a win condition, the game is won', () => {
@@ -58,7 +61,26 @@ test('when player plays a token in a slot that creates a win condition, the game
 
   expect(game.hasWinCondition(emptyGame)).toEqual(false);
   expect(game.hasWinCondition(board)).toEqual(false);
-  expect(game.takeTurn(player2, board, row, column)).toEqual(turnTaken);
+  expect(game.takeTurn(player2, board, row, column)).toEqual(true);
+  expect(board).toEqual(turnTaken);
   expect(game.hasWinCondition(board)).toEqual(true);
   
+});
+
+test('when the board is full, but there is no winner it is a draw', () => {
+  let board = [ [ ' ', ' ', player1 ],
+                [ ' ', player2, player2 ],
+                [ player1, ' ', ' ' ] ];
+  let fullBoard = [ [ player1, player1, player1 ],
+                [ player1, player2, player2 ],
+                [ player1, player1, player1 ] ];
+  let row = 1;
+  let column = 0;
+
+  expect(game.boardIsFull(emptyGame)).toEqual(false);
+  expect(game.boardIsFull(board)).toEqual(false);
+  game.takeTurn(player2, board, row, column);
+  expect(game.boardIsFull(board)).toEqual(false);
+  expect(game.boardIsFull(fullBoard)).toEqual(true);
+
 });
